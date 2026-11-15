@@ -1,14 +1,24 @@
-# Local configuration — never commit credentials
+# Local configuration — never commit credentials.
+# WordPress generates it inside the container from env vars.
 /wp-config.php
 
-# WordPress runtime data (user uploads, cache, upgrades, logs)
+# WordPress core files that the official image copies into wp-content on first boot.
+/wp-content/index.php
+/wp-content/debug.log
+/wp-content/*.log
+
+# Bundled themes/plugins — only our own theme is tracked.
+/wp-content/themes/*
+!/wp-content/themes/andescon-theme/
+/wp-content/plugins/*
+!/wp-content/plugins/.gitkeep
+
+# Runtime data (user uploads, cache, upgrades)
 /wp-content/uploads/*
 !/wp-content/uploads/.gitkeep
 /wp-content/cache/
 /wp-content/upgrade/
 /wp-content/upgrade-temp-backup/
-/wp-content/*.log
-/wp-content/debug.log
 
 # OS / editor noise
 .DS_Store
@@ -20,3 +30,6 @@ Thumbs.db
 # Dependencies
 node_modules/
 vendor/
+
+# Local env (docker compose)
+.env

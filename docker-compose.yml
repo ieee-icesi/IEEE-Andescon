@@ -1,0 +1,70 @@
+name: andescon
+
+# Shared so the web container and WP-CLI see the same environment.
+# Duplicating this block is how environments silently drift apart.
+x-wp-config-extra: &wp-config-extra |
+  define( 'WP_DEBUG_LOG', true );
+  define( 'WP_DEBUG_DISPLAY', false );
+  define( 'WP_ENVIRONMENT_TYPE', 'local' );
+  define( 'DISALLOW_FILE_EDIT', true );
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-andescon}
+      MYSQL_USER: ${DB_USER:-andescon}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-andescon}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  wordpress:
+    image: wordpress:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME:-andescon}
+      WORDPRESS_DB_USER: ${DB_USER:-andescon}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-andescon}
+      WORDPRESS_DEBUG: "${WP_DEBUG:-1}"
+      WORDPRESS_CONFIG_EXTRA: *wp-config-extra
+    volumes:
+      # Core files live in a named volume: the repo stays exactly
+      # wp-content/ + wp-config.php and nothing else.
+      - wp_data:/var/www/html
+      # Only the theme/plugins/uploads are bind-mounted from the repo.
+      - ./wp-content:/var/www/html/wp-content
+
+  wpcli:
+    image: wordpress:cli
+    profiles: ["cli"]
+    depends_on:
+      db:
+        condition: service_healthy
+    user: "33:33"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME:-andescon}
+      WORDPRESS_DB_USER: ${DB_USER:-andescon}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-andescon}
+      WORDPRESS_CONFIG_EXTRA: *wp-config-extra
+    volumes:
+      - wp_data:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+
+volumes:
+  db_data:
+  wp_data:
