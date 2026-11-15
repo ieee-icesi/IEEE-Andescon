@@ -1,0 +1,17 @@
+/*
+Theme Name: Andescon Theme
+Theme URI:
+Author:
+Author URI:
+Description: Custom theme for IEEE ANDESCON.
+Version: 0.1.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: andescon-theme
+Tags: custom
+*/
+
+/* Styles are enqueued from assets/css/. This file only carries the theme header. */

@@ -1,0 +1,22 @@
+# Local configuration — never commit credentials
+/wp-config.php
+
+# WordPress runtime data (user uploads, cache, upgrades, logs)
+/wp-content/uploads/*
+!/wp-content/uploads/.gitkeep
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/upgrade-temp-backup/
+/wp-content/*.log
+/wp-content/debug.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+vendor/
