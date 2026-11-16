@@ -15,6 +15,7 @@ get_header();
 	<?php
 	get_template_part( 'template-parts/hero' );
 	get_template_part( 'template-parts/intro' );
+	get_template_part( 'template-parts/home-tracks' );
 	?>
 	<section class="home-dates">
 		<?php get_template_part( 'template-parts/dates', null, array( 'link' => true ) ); ?>

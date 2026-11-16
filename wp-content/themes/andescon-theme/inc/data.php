@@ -80,6 +80,27 @@ function andescon_tracks(): array {
 }
 
 /**
+ * Photos for the home-page track mosaic, in the same order as
+ * andescon_tracks(). Wikimedia Commons images; credits are shown under
+ * the mosaic as the licenses require.
+ *
+ * @return array<int, array{image: string, alt: string, author: string, license: string, source: string}>
+ */
+function andescon_track_photos(): array {
+	return array(
+		array( 'image' => 'img/tracks/data.webp', 'alt' => 'Rows of server racks in a data center', 'author' => 'PiDatacenters', 'license' => 'CC BY-SA 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:Racks_Amravati_Data_Center.jpg' ),
+		array( 'image' => 'img/tracks/energy.webp', 'alt' => 'High-voltage transmission tower against a blue sky', 'author' => 'Judgefloro', 'license' => 'CC BY-SA 3.0', 'source' => 'https://commons.wikimedia.org/wiki/File:FvfCoralnaBatoSRc0731_12.JPG' ),
+		array( 'image' => 'img/tracks/robotics.webp', 'alt' => 'Collaborative robot arm on a workbench with its control tablet', 'author' => 'Auledas', 'license' => 'CC BY-SA 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:UR16e_robot_arm.png' ),
+		array( 'image' => 'img/tracks/telecom.webp', 'alt' => 'Telecommunication tower with antennas and dishes', 'author' => 'Jana Plavec', 'license' => 'CC BY-SA 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:Telecommunication_tower_on_Mile%C5%A1ovka_2021-11-06_01.jpg' ),
+		array( 'image' => 'img/tracks/circuits.webp', 'alt' => 'Close-up of green circuit board traces', 'author' => 'Peter Shanks', 'license' => 'CC BY 2.0', 'source' => 'https://commons.wikimedia.org/wiki/File:Green_circuit_board_II_(2389301870).jpg' ),
+		array( 'image' => 'img/tracks/software.webp', 'alt' => 'Colourful source code on a screen', 'author' => 'Martin Vorel', 'license' => 'CC BY-SA 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:Programming_code.jpg' ),
+		array( 'image' => 'img/tracks/biomedical.webp', 'alt' => 'MRI scanner in a hospital room', 'author' => 'Jan Ainali', 'license' => 'CC BY 3.0', 'source' => 'https://commons.wikimedia.org/wiki/File:MRI-Philips.JPG' ),
+		array( 'image' => 'img/tracks/mobility.webp', 'alt' => 'Electric city bus charging at a pantograph station', 'author' => 'Maksym Kozlenko', 'license' => 'CC BY 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:2024-0%3D424_Electric_bus_charging_in_Warsaw.jpg' ),
+		array( 'image' => 'img/tracks/education.webp', 'alt' => 'Student driving a competition robot with a game controller', 'author' => 'Noah Wulf', 'license' => 'CC BY-SA 4.0', 'source' => 'https://commons.wikimedia.org/wiki/File:VEX_Robotics_Competition_Robot_and_Controller.jpg' ),
+	);
+}
+
+/**
  * Submission milestones.
  *
  * @return array<int, array{label: string, title: string, text: string, date: string, short: string}>
