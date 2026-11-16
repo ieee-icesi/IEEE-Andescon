@@ -12,16 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <section class="section wrap" id="tracks">
 	<div class="section-head">
 		<div>
-			<span class="eyebrow"><?php esc_html_e( '02 / RESEARCH DIRECTIONS', 'andescon-theme' ); ?></span>
-			<h2>
-				<?php esc_html_e( 'Nine tracks.', 'andescon-theme' ); ?><br>
-				<em><?php esc_html_e( 'Endless connections.', 'andescon-theme' ); ?></em>
-			</h2>
+			<h2><?php esc_html_e( 'Research tracks', 'andescon-theme' ); ?></h2>
 		</div>
-		<p>
-			<?php esc_html_e( 'Find the right conversation for your work.', 'andescon-theme' ); ?><br>
-			<?php esc_html_e( 'Select a track to explore its focus.', 'andescon-theme' ); ?>
-		</p>
+		<p><?php esc_html_e( 'ANDESCON 2027 accepts papers in nine technical tracks. Select a track to see its scope.', 'andescon-theme' ); ?></p>
 	</div>
 
 	<div class="track-grid" id="track-grid">

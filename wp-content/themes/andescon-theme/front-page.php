@@ -15,15 +15,12 @@ get_header();
 	<?php
 	get_template_part( 'template-parts/hero' );
 	get_template_part( 'template-parts/intro' );
-	get_template_part( 'template-parts/tracks' );
-	get_template_part( 'template-parts/authors' );
-	get_template_part( 'template-parts/program' );
+	?>
+	<section class="home-dates">
+		<?php get_template_part( 'template-parts/dates', null, array( 'link' => true ) ); ?>
+	</section>
+	<?php
 	get_template_part( 'template-parts/city' );
-	get_template_part( 'template-parts/registration' );
-	get_template_part( 'template-parts/committee' );
-	get_template_part( 'template-parts/travel' );
-	get_template_part( 'template-parts/partners' );
-	get_template_part( 'template-parts/contact' );
 	?>
 </main>
 <?php

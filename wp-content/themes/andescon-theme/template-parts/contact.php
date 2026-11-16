@@ -8,38 +8,47 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$andescon_organizer = andescon_organizer();
 ?>
+<div class="footer-skyline" aria-hidden="true">
+	<img src="<?php echo esc_url( andescon_asset( 'img/andescon-cali-footer.svg' ) ); ?>" alt="" width="2400" height="420" loading="lazy">
+</div>
 <section id="contact" class="contact">
 	<div class="wrap">
-		<span class="eyebrow light"><?php esc_html_e( 'LET’S START A CONVERSATION', 'andescon-theme' ); ?></span>
-
 		<div class="contact-grid">
-			<h2>
-				<?php esc_html_e( 'Have a question?', 'andescon-theme' ); ?><br>
-				<em><?php esc_html_e( 'Let’s connect.', 'andescon-theme' ); ?></em>
-			</h2>
-			<div>
-				<p><?php esc_html_e( 'For author enquiries, partnerships or planning your visit, reach out to the organizing team.', 'andescon-theme' ); ?></p>
-				<button type="button" class="button cream" data-dialog="contact">
-					<?php esc_html_e( 'Contact the committee', 'andescon-theme' ); ?>
-					<?php andescon_arrow(); ?>
-				</button>
+			<div class="footer-col">
+				<h2><?php esc_html_e( 'Contact', 'andescon-theme' ); ?></h2>
+				<p><?php esc_html_e( 'For author enquiries, partnerships or planning your visit, write to the organizing team.', 'andescon-theme' ); ?></p>
+				<a class="contact-email" href="<?php echo esc_url( 'mailto:' . $andescon_organizer['email'] ); ?>">
+					<i class="fa-regular fa-envelope" aria-hidden="true"></i>
+					<?php echo esc_html( $andescon_organizer['email'] ); ?>
+				</a>
+				<a class="contact-social" href="<?php echo esc_url( $andescon_organizer['facebook'] ); ?>" target="_blank" rel="noopener">
+					<i class="fa-brands fa-facebook" aria-hidden="true"></i>
+					<?php esc_html_e( 'IEEE ANDESCON on Facebook', 'andescon-theme' ); ?>
+					<span class="sr-only"><?php esc_html_e( '(opens in a new tab)', 'andescon-theme' ); ?></span>
+				</a>
+			</div>
+
+			<div class="footer-col footer-partners" id="partners">
+				<h2><?php esc_html_e( 'Sponsors & partners', 'andescon-theme' ); ?></h2>
+				<?php foreach ( andescon_footer_logos() as $andescon_group ) : ?>
+					<div class="organizer">
+						<span><?php echo esc_html( $andescon_group['label'] ); ?></span>
+						<ul class="logo-row">
+							<?php foreach ( $andescon_group['logos'] as $andescon_logo ) : ?>
+								<li><img src="<?php echo esc_url( andescon_asset( $andescon_logo['image'] ) ); ?>" alt="<?php echo esc_attr( $andescon_logo['name'] ); ?>" width="<?php echo (int) $andescon_logo['width']; ?>" height="<?php echo (int) $andescon_logo['height']; ?>" loading="lazy"></li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				<?php endforeach; ?>
 			</div>
 		</div>
 
-		<div class="footer">
-			<strong>
-				<?php esc_html_e( 'IEEE ANDESCON', 'andescon-theme' ); ?>
-				<span><?php esc_html_e( '2027 · CALI', 'andescon-theme' ); ?></span>
-			</strong>
-			<div>
-				<a href="<?php echo esc_url( andescon_anchor( 'authors' ) ); ?>"><?php esc_html_e( 'For authors', 'andescon-theme' ); ?></a>
-				<a href="<?php echo esc_url( andescon_anchor( 'travel' ) ); ?>"><?php esc_html_e( 'Visit Cali', 'andescon-theme' ); ?></a>
-				<button type="button" data-dialog="credits"><?php esc_html_e( 'Image credits', 'andescon-theme' ); ?></button>
-				<a href="<?php echo esc_url( andescon_anchor( 'main' ) ); ?>"><?php esc_html_e( 'Back to top', 'andescon-theme' ); ?> &uarr;</a>
-			</div>
-		</div>
+		<p class="copyright">
+			&copy; <?php esc_html_e( 'Copyright 2026 IEEE Icesi Student Branch Web Master', 'andescon-theme' ); ?>
+		</p>
 
-		<div class="footer-note"><?php esc_html_e( 'Design prototype · All unconfirmed program, committee, registration and venue information is illustrative.', 'andescon-theme' ); ?></div>
 	</div>
 </section>

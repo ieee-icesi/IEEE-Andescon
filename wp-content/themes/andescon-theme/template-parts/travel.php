@@ -8,23 +8,27 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$andescon_venue = andescon_venue();
 ?>
 <section id="travel" class="section wrap travel">
-	<div class="travel-image">
-		<img
-			src="<?php echo esc_url( andescon_asset( 'img/ermita.webp' ) ); ?>"
-			alt="<?php esc_attr_e( 'The white Gothic architecture of La Ermita church in Cali', 'andescon-theme' ); ?>"
-			loading="lazy" width="1280" height="1812">
-		<span class="image-label"><?php esc_html_e( 'SANTIAGO DE CALI / COLOMBIA', 'andescon-theme' ); ?></span>
+	<div class="travel-map">
+		<iframe
+			src="<?php echo esc_url( 'https://www.google.com/maps?q=' . rawurlencode( $andescon_venue['query'] ) . '&output=embed' ); ?>"
+			title="<?php echo esc_attr( sprintf( /* translators: %s: venue name. */ __( 'Map: %s', 'andescon-theme' ), $andescon_venue['name'] ) ); ?>"
+			loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+		<div class="venue-card">
+			<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+			<div>
+				<b><?php echo esc_html( $andescon_venue['name'] ); ?></b>
+				<span><?php echo esc_html( $andescon_venue['address'] ); ?></span>
+			</div>
+		</div>
 	</div>
 
 	<div class="travel-copy">
-		<span class="eyebrow"><?php esc_html_e( '08 / PLAN YOUR VISIT', 'andescon-theme' ); ?></span>
-		<h2>
-			<?php esc_html_e( 'Come for the ideas.', 'andescon-theme' ); ?><br>
-			<em><?php esc_html_e( 'Stay for Cali.', 'andescon-theme' ); ?></em>
-		</h2>
-		<p><?php esc_html_e( 'A setting where engineering meets a vibrant cultural landscape. Make space for the city beyond the conference.', 'andescon-theme' ); ?></p>
+		<h2><?php esc_html_e( 'Venue & travel', 'andescon-theme' ); ?></h2>
+		<p><?php esc_html_e( 'Practical information for your trip to Cali.', 'andescon-theme' ); ?></p>
 
 		<?php foreach ( andescon_travel_topics() as $andescon_topic ) : ?>
 			<details<?php echo $andescon_topic['open'] ? ' open' : ''; ?>>
@@ -35,11 +39,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</details>
 		<?php endforeach; ?>
 
-		<a class="text-link" href="https://www.google.com/maps/search/Cali+Colombia" target="_blank" rel="noopener">
-			<?php esc_html_e( 'Explore Cali on the map', 'andescon-theme' ); ?>
-			<?php andescon_arrow(); ?>
+		<a class="text-link" href="<?php echo esc_url( 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $andescon_venue['query'] ) ); ?>" target="_blank" rel="noopener">
+			<?php esc_html_e( 'Open in Google Maps', 'andescon-theme' ); ?>
 			<span class="sr-only"><?php esc_html_e( '(opens in a new tab)', 'andescon-theme' ); ?></span>
 		</a>
-		<span class="caption credit"><?php esc_html_e( 'Photo: C arango / Wikimedia Commons, public domain', 'andescon-theme' ); ?></span>
 	</div>
 </section>

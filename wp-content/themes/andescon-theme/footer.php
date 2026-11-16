@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+get_template_part( 'template-parts/contact' );
 get_template_part( 'template-parts/dialogs' );
 
 wp_footer();

@@ -11,25 +11,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $andescon_numbers = array(
 	array( 'value' => '09', 'label' => __( 'Research tracks', 'andescon-theme' ) ),
-	array( 'value' => '03', 'label' => __( 'Days of exchange', 'andescon-theme' ) ),
-	array( 'value' => '01', 'label' => __( 'Connected community', 'andescon-theme' ) ),
+	array( 'value' => '03', 'label' => __( 'Conference days', 'andescon-theme' ) ),
+	array( 'value' => 'XIII', 'label' => __( 'Edition', 'andescon-theme' ) ),
 );
 ?>
 <section class="intro-section">
 	<div class="wrap intro-grid">
 		<div>
-			<span class="eyebrow light"><?php esc_html_e( '01 / THE CONVERSATION', 'andescon-theme' ); ?></span>
-			<h2>
-				<?php esc_html_e( 'Ideas cross borders.', 'andescon-theme' ); ?><br>
-				<em><?php esc_html_e( 'Impact connects us.', 'andescon-theme' ); ?></em>
-			</h2>
+			<h2><?php esc_html_e( 'About ANDESCON', 'andescon-theme' ); ?></h2>
+			<dl class="intro-meta">
+				<div>
+					<dt><?php esc_html_e( 'SAVE THE DATE', 'andescon-theme' ); ?></dt>
+					<dd><?php esc_html_e( 'June 9–11, 2027', 'andescon-theme' ); ?></dd>
+				</div>
+				<div>
+					<dt><?php esc_html_e( 'THE HOST CITY', 'andescon-theme' ); ?></dt>
+					<dd><?php esc_html_e( 'Santiago de Cali, Colombia', 'andescon-theme' ); ?></dd>
+				</div>
+			</dl>
+			<a class="button cream" href="<?php echo esc_url( andescon_url( 'authors' ) ); ?>">
+				<?php esc_html_e( 'Explore the call for papers', 'andescon-theme' ); ?>
+			</a>
 		</div>
 		<div>
-			<p><?php esc_html_e( 'ANDESCON brings engineering disciplines into a shared conversation. A place for researchers, practitioners and students to exchange ideas and explore technology in the context of our region.', 'andescon-theme' ); ?></p>
-			<p class="muted"><?php esc_html_e( 'From intelligent systems to sustainable energy, discover the intersections that move research forward.', 'andescon-theme' ); ?></p>
-			<a class="text-link light" href="<?php echo esc_url( andescon_anchor( 'tracks' ) ); ?>">
+			<p><?php esc_html_e( 'ANDESCON is the biennial technical and scientific conference of the IEEE Andean Council, bringing together IEEE professionals and scientists from the Andean countries.', 'andescon-theme' ); ?></p>
+			<p><?php esc_html_e( 'It is an opportunity for professional members, academics, researchers and industry to meet and present the developments and technological advances that move the Andean region forward.', 'andescon-theme' ); ?></p>
+			<p class="muted"><?php esc_html_e( 'The thirteenth edition of this IEEE event will be held in Santiago de Cali, Colombia.', 'andescon-theme' ); ?></p>
+			<a class="text-link light" href="<?php echo esc_url( andescon_url( 'authors#tracks' ) ); ?>">
 				<?php esc_html_e( 'Find your field of research', 'andescon-theme' ); ?>
-				<?php andescon_arrow(); ?>
 			</a>
 		</div>
 	</div>

@@ -25,9 +25,8 @@ foreach ( andescon_tracks() as $andescon_i => $andescon_track ) :
 			<p><?php echo esc_html( $andescon_track['summary'] ); ?></p>
 			<p><?php echo esc_html( $andescon_track['topics'] ); ?></p>
 			<p class="caption"><?php esc_html_e( 'Illustrative scope. Final topics and track chairs will be confirmed in the official Call for Papers.', 'andescon-theme' ); ?></p>
-			<a class="text-link dialog-link" href="<?php echo esc_url( andescon_anchor( 'authors' ) ); ?>">
+			<a class="text-link dialog-link" href="<?php echo esc_url( andescon_url( 'authors#submission' ) ); ?>">
 				<?php esc_html_e( 'Explore author information', 'andescon-theme' ); ?>
-				<?php andescon_arrow(); ?>
 			</a>
 		</div>
 		<button type="button" class="button dialog-done">

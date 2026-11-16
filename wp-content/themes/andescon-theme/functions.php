@@ -48,28 +48,48 @@ function andescon_theme_setup(): void {
 add_action( 'after_setup_theme', 'andescon_theme_setup' );
 
 /**
+ * Cache-busting version for a theme asset: the file's modification time, so
+ * browsers fetch the new file as soon as it changes.
+ *
+ * @param string $path Path under assets/.
+ * @return string
+ */
+function andescon_asset_version( string $path ): string {
+	$mtime = filemtime( ANDESCON_THEME_DIR . '/assets/' . $path );
+
+	return false === $mtime ? ANDESCON_THEME_VERSION : (string) $mtime;
+}
+
+/**
  * Enqueue styles and scripts.
  */
 function andescon_theme_assets(): void {
 	wp_enqueue_style(
 		'andescon-fonts',
-		'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Caslon+Display&display=swap',
+		'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap',
 		array(),
 		null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- third party.
 	);
 
 	wp_enqueue_style(
+		'font-awesome',
+		'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
+		array(),
+		null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- version is in the URL.
+	);
+
+	wp_enqueue_style(
 		'andescon-theme',
 		ANDESCON_THEME_URI . '/assets/css/main.css',
-		array( 'andescon-fonts' ),
-		ANDESCON_THEME_VERSION
+		array( 'andescon-fonts', 'font-awesome' ),
+		andescon_asset_version( 'css/main.css' )
 	);
 
 	wp_enqueue_script(
 		'andescon-theme',
 		ANDESCON_THEME_URI . '/assets/js/main.js',
 		array(),
-		ANDESCON_THEME_VERSION,
+		andescon_asset_version( 'js/main.js' ),
 		true
 	);
 }
@@ -145,6 +165,41 @@ function andescon_preload_hero(): void {
 add_action( 'wp_head', 'andescon_preload_hero', 2 );
 
 /**
+ * ANDESCON favicon set. Skipped when a Site Icon is chosen in
+ * Appearance → Customize, so the admin can still override it.
+ *
+ * @return void
+ */
+function andescon_favicons(): void {
+	if ( has_site_icon() ) {
+		return;
+	}
+
+	printf( '<link rel="icon" href="%s" sizes="any">' . "\n", esc_url( andescon_asset( 'img/icons/favicon.ico' ) ) );
+	printf( '<link rel="icon" type="image/png" href="%s" sizes="32x32">' . "\n", esc_url( andescon_asset( 'img/icons/icon-32.png' ) ) );
+	printf( '<link rel="icon" type="image/png" href="%s" sizes="192x192">' . "\n", esc_url( andescon_asset( 'img/icons/icon-192.png' ) ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( andescon_asset( 'img/icons/apple-touch-icon.png' ) ) );
+}
+add_action( 'wp_head', 'andescon_favicons', 3 );
+add_action( 'login_head', 'andescon_favicons' );
+
+/**
+ * Serve the theme icon for direct /favicon.ico requests instead of the
+ * WordPress logo core falls back to.
+ *
+ * @return void
+ */
+function andescon_favicon_ico(): void {
+	if ( has_site_icon() ) {
+		return;
+	}
+
+	wp_safe_redirect( andescon_asset( 'img/icons/favicon.ico' ), 301 );
+	exit;
+}
+add_action( 'do_faviconico', 'andescon_favicon_ico', 5 );
+
+/**
  * Body classes that describe the landing page context.
  *
  * @param array<int, string> $classes Existing classes.
@@ -158,3 +213,38 @@ function andescon_body_classes( array $classes ): array {
 	return $classes;
 }
 add_filter( 'body_class', 'andescon_body_classes' );
+
+/**
+ * Create the inner pages listed in andescon_pages() if they are missing.
+ *
+ * Runs once per page-list version, so editors can rename or unpublish a page
+ * afterwards without the theme recreating it on every request.
+ *
+ * @return void
+ */
+function andescon_ensure_pages(): void {
+	$version = md5( implode( ',', array_keys( andescon_pages() ) ) );
+
+	if ( get_option( 'andescon_pages_version' ) === $version ) {
+		return;
+	}
+
+	foreach ( andescon_pages() as $slug => $page ) {
+		if ( get_page_by_path( $slug ) ) {
+			continue;
+		}
+
+		wp_insert_post(
+			array(
+				'post_type'   => 'page',
+				'post_status' => 'publish',
+				'post_name'   => $slug,
+				'post_title'  => $page['title'],
+			)
+		);
+	}
+
+	update_option( 'andescon_pages_version', $version );
+}
+add_action( 'init', 'andescon_ensure_pages', 20 );
+add_action( 'after_switch_theme', 'andescon_ensure_pages' );

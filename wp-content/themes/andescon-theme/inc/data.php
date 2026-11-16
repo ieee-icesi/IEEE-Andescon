@@ -80,85 +80,98 @@ function andescon_tracks(): array {
 }
 
 /**
- * The three conference days and their sessions.
+ * Submission milestones.
  *
- * @return array<int, array{label: string, title: string, sessions: array<int, array{time: string, type: string, title: string, text: string}>}>
+ * @return array<int, array{label: string, title: string, text: string, date: string, short: string}>
  */
-function andescon_agenda(): array {
+function andescon_milestones(): array {
+	return array(
+		array( 'label' => '01 · SUBMISSION', 'title' => 'Full paper submission', 'text' => 'Deadline for full papers in all nine research tracks.', 'date' => '2027-02-16', 'short' => 'FEB 16, 2027' ),
+		array( 'label' => '02 · REVIEW', 'title' => 'Notification of acceptance', 'text' => 'Authors receive the review results.', 'date' => '2027-03-30', 'short' => 'MAR 30, 2027' ),
+		array( 'label' => '03 · FINAL VERSION', 'title' => 'Final paper submission', 'text' => 'Camera-ready version of accepted papers.', 'date' => '2027-04-30', 'short' => 'APR 30, 2027' ),
+		array( 'label' => '04 · CONFERENCE', 'title' => 'ANDESCON 2027 in Cali', 'text' => 'Three days of keynotes, technical sessions and workshops.', 'date' => '2027-06-09', 'short' => 'JUN 9–11, 2027' ),
+	);
+}
+
+/**
+ * Organizer and contact details, shown in the contact section.
+ *
+ * @return array{name: string, email: string, facebook: string, logo: string}
+ */
+function andescon_organizer(): array {
+	return array(
+		'name'  => 'IEEE Andean Council (Consejo Andino)',
+		'email' => 'consejoandino@gmail.com',
+		'facebook' => 'https://www.facebook.com/IEEEandescon/',
+		'logo'  => 'img/logos/logo-andino-blanco-1024x264-1.webp',
+	);
+}
+
+/**
+ * Footer logo groups ("Hosted by", "Organized by"). Logos are light
+ * artwork on transparent backgrounds, sized for the dark footer.
+ *
+ * @return array<int, array{label: string, logos: array<int, array{name: string, image: string, width: int, height: int}>}>
+ */
+function andescon_footer_logos(): array {
 	return array(
 		array(
-			'label'    => 'DAY 01 / JUNE 09',
-			'title'    => 'Discover',
-			'sessions' => array(
-				array( 'time' => '09:00', 'type' => 'WELCOME', 'title' => 'Opening & shared perspectives', 'text' => 'Welcome to the conference community.' ),
-				array( 'time' => '10:00', 'type' => 'KEYNOTE', 'title' => 'Engineering across disciplines', 'text' => 'An opening conversation on research and regional impact.' ),
-				array( 'time' => '14:00', 'type' => 'TECHNICAL SESSIONS', 'title' => 'Research in focus', 'text' => 'Parallel sessions across the conference tracks.' ),
-				array( 'time' => '17:00', 'type' => 'COMMUNITY', 'title' => 'Meet your research community', 'text' => 'Time for conversations and new connections.' ),
+			'label' => __( 'HOSTED BY', 'andescon-theme' ),
+			'logos' => array(
+				array( 'name' => 'Universidad Icesi', 'image' => 'img/logos/icesi.webp', 'width' => 640, 'height' => 237 ),
 			),
 		),
 		array(
-			'label'    => 'DAY 02 / JUNE 10',
-			'title'    => 'Connect',
-			'sessions' => array(
-				array( 'time' => '09:00', 'type' => 'KEYNOTE', 'title' => 'Intelligent and sustainable systems', 'text' => 'A cross-disciplinary research perspective.' ),
-				array( 'time' => '10:30', 'type' => 'TECHNICAL SESSIONS', 'title' => 'From methods to applications', 'text' => 'Research presentations and moderated discussion.' ),
-				array( 'time' => '14:00', 'type' => 'WORKSHOP', 'title' => 'Ideas into practice', 'text' => 'An illustrative space for hands-on learning.' ),
-				array( 'time' => '17:00', 'type' => 'EXCHANGE', 'title' => 'Industry meets research', 'text' => 'A conversation across academic and industry perspectives.' ),
-			),
-		),
-		array(
-			'label'    => 'DAY 03 / JUNE 11',
-			'title'    => 'Move forward',
-			'sessions' => array(
-				array( 'time' => '09:00', 'type' => 'TECHNICAL SESSIONS', 'title' => 'Emerging directions', 'text' => 'Explore new methods and open questions.' ),
-				array( 'time' => '11:00', 'type' => 'PANEL', 'title' => 'Technology and its social impact', 'text' => 'A multidisciplinary conversation.' ),
-				array( 'time' => '14:00', 'type' => 'COMMUNITY', 'title' => 'Next-generation engineering', 'text' => 'Student research and education perspectives.' ),
-				array( 'time' => '16:00', 'type' => 'CLOSING', 'title' => 'Connections that continue', 'text' => 'Reflections and the next chapter.' ),
+			'label' => __( 'ORGANIZED BY', 'andescon-theme' ),
+			'logos' => array(
+				array( 'name' => 'IEEE Andean Council (Consejo Andino)', 'image' => 'img/logos/logo-andino-blanco-1024x264-1.webp', 'width' => 1024, 'height' => 264 ),
+				array( 'name' => 'IEEE Region 9', 'image' => 'img/logos/ieee-region9.webp', 'width' => 640, 'height' => 317 ),
+				array( 'name' => 'IEEE Colombia Section', 'image' => 'img/logos/ieee-colombia.webp', 'width' => 640, 'height' => 212 ),
 			),
 		),
 	);
 }
 
 /**
- * Submission milestones.
+ * The conference as a calendar event: drives the countdown and the
+ * "Add to calendar" links. All-day event; `end` is exclusive (iCal rule).
  *
- * @return array<int, array{label: string, value: string, text: string}>
+ * @return array{title: string, start: string, end: string, starts_at: string, location: string, details: string}
  */
-function andescon_milestones(): array {
+function andescon_event(): array {
 	return array(
-		array( 'label' => '01 / SUBMISSION', 'value' => 'To be announced', 'text' => 'Paper submission deadline' ),
-		array( 'label' => '02 / REVIEW', 'value' => 'To be announced', 'text' => 'Acceptance notification' ),
-		array( 'label' => '03 / FINAL VERSION', 'value' => 'To be announced', 'text' => 'Camera-ready submission' ),
-		array( 'label' => '04 / MEET IN CALI', 'value' => 'June 9–11, 2027', 'text' => 'Conference dates*' ),
+		'title'     => 'IEEE ANDESCON 2027',
+		'start'     => '2027-06-09',
+		'end'       => '2027-06-12',
+		'starts_at' => '2027-06-09T00:00:00-05:00', // Midnight in Cali (UTC-5).
+		'location'  => 'Santiago de Cali, Colombia',
+		'details'   => 'IEEE ANDESCON 2027 — Technology and innovation for Andean industry. June 9–11, 2027, Cali, Colombia.',
 	);
 }
 
 /**
  * Registration categories.
  *
- * @return array<int, array{eyebrow: string, title: string, text: string, price: string, action: string, featured: bool}>
+ * @return array<int, array{title: string, text: string, price: string, action: string, featured: bool}>
  */
 function andescon_registration_tiers(): array {
 	return array(
 		array(
-			'eyebrow'  => '01 / AUTHORS',
-			'title'    => 'Present your work.',
+			'title'    => 'Authors',
 			'text'     => 'For researchers sharing an accepted contribution with the conference community.',
 			'price'    => 'Fees to be announced',
 			'action'   => 'Author registration',
 			'featured' => false,
 		),
 		array(
-			'eyebrow'  => '02 / ATTENDEES',
-			'title'    => 'Expand your perspective.',
+			'title'    => 'Attendees',
 			'text'     => 'For professionals, educators and researchers joining the conversations.',
 			'price'    => 'Fees to be announced',
 			'action'   => 'Attend ANDESCON',
 			'featured' => true,
 		),
 		array(
-			'eyebrow'  => '03 / STUDENTS',
-			'title'    => 'Start your next chapter.',
+			'title'    => 'Students',
 			'text'     => 'For emerging engineers looking to learn, connect and explore new directions.',
 			'price'    => 'Fees to be announced',
 			'action'   => 'Student registration',
@@ -170,52 +183,155 @@ function andescon_registration_tiers(): array {
 /**
  * Organizing committees.
  *
- * @return array<int, array{title: string, text: string, note: string}>
+ * @return array<int, array{title: string, text: string}>
  */
 function andescon_committee(): array {
 	return array(
-		array( 'title' => 'General Chairs', 'text' => 'Conference leadership', 'note' => 'Names & affiliations forthcoming' ),
-		array( 'title' => 'Technical Program', 'text' => 'Research and review coordination', 'note' => 'Names & affiliations forthcoming' ),
-		array( 'title' => 'Local Organization', 'text' => 'Your hosts in Cali', 'note' => 'Names & affiliations forthcoming' ),
-		array( 'title' => 'Track Chairs', 'text' => 'Expertise across nine fields', 'note' => 'Names & affiliations forthcoming' ),
+		array( 'title' => 'General Chairs', 'text' => 'Conference leadership' ),
+		array( 'title' => 'Technical Program', 'text' => 'Research and review coordination' ),
+		array( 'title' => 'Local Organization', 'text' => 'Your hosts in Cali' ),
+		array( 'title' => 'Track Chairs', 'text' => 'Expertise across nine fields' ),
 	);
 }
 
 /**
- * Partner slots.
+ * Conference venue. Change these values if the venue moves; the map and
+ * links in the travel section follow automatically.
  *
- * @return array<int, array{label: string, note: string}>
+ * @return array{name: string, address: string, query: string}
  */
-function andescon_partners(): array {
+function andescon_venue(): array {
 	return array(
-		array( 'label' => 'HOST INSTITUTION', 'note' => 'Partner to be announced' ),
-		array( 'label' => 'ACADEMIC PARTNER', 'note' => 'Partner to be announced' ),
-		array( 'label' => 'INDUSTRY PARTNER', 'note' => 'Partner to be announced' ),
+		'name'    => 'Universidad Icesi',
+		'address' => 'Calle 18 No. 122-135, Pance, Cali, Colombia',
+		'query'   => 'Universidad Icesi, Cali, Colombia',
+	);
+}
+
+/**
+ * Discover Cali: places to visit and typical food for the Attend page.
+ *
+ * Wikimedia Commons photos carry `author`, `license` and `source`, shown on
+ * the card as attribution. Leave `author` empty when no credit is needed.
+ *
+ * @return array<string, array{title: string, items: array<int, array<string, string>>}>
+ */
+function andescon_discover(): array {
+	$c = 'https://commons.wikimedia.org/wiki/File:';
+
+	return array(
+		'places' => array(
+			'title' => 'Places to visit',
+			'items' => array(
+				array( 'title' => 'Cristo Rey', 'text' => 'A 26-metre statue watching over the city from the western hills.', 'image' => 'img/discover/cristo-rey.webp', 'alt' => 'The Cristo Rey statue against the sky', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'Barrio San Antonio', 'text' => 'Colonial streets, cafés and the best sunset view of Cali.', 'image' => 'img/discover/san-antonio.webp', 'alt' => 'A sloping street of colonial houses in San Antonio', 'author' => 'ProtoplasmaKid', 'license' => 'CC BY 4.0', 'source' => $c . 'Barrio_San_Antonio,_Cali_02.jpg' ),
+				array( 'title' => 'Salsa capital', 'text' => 'Dance the night away in the world capital of salsa.', 'image' => 'img/discover/salsa.webp', 'alt' => 'A couple dancing salsa on stage', 'author' => 'Hilcias Salazar', 'license' => 'CC BY 2.0', 'source' => $c . 'Salsa_en_Cali.jpg' ),
+				array( 'title' => 'Cerro de las Tres Cruces', 'text' => 'A popular morning hike with views over the whole valley.', 'image' => 'img/discover/tres-cruces.webp', 'alt' => 'Hikers at the crosses on top of the Tres Cruces hill', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'El Gato del Río', 'text' => 'Hernando Tejada\'s bronze cat and its "girlfriends" along the Cali river.', 'image' => 'img/discover/gato-rio.webp', 'alt' => 'The Gato del Río sculpture by the river', 'author' => 'Juan Espinosa', 'license' => 'CC BY-SA 2.0', 'source' => $c . 'El_Gato_del_R%C3%ADo-Cali.jpg' ),
+				array( 'title' => 'Bulevar del Río', 'text' => 'A walkable riverside promenade in the historic centre.', 'image' => 'img/discover/bulevar-rio.webp', 'alt' => 'The Bulevar del Río promenade in downtown Cali at night', 'author' => '', 'license' => '', 'source' => '' ),
+			),
+		),
+		'food'   => array(
+			'title' => 'A taste of Cali',
+			'items' => array(
+				array( 'title' => 'Pandebono', 'text' => 'Warm cheese bread made with cassava starch. Breakfast in Valle del Cauca.', 'image' => 'img/discover/pandebono.webp', 'alt' => 'Freshly baked pandebono', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'Cholado', 'text' => 'Shaved ice, tropical fruit, condensed milk and syrup, sold from street carts.', 'image' => 'img/discover/cholado.webp', 'alt' => 'A cholado with fruit, syrup and wafers', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'Lulada', 'text' => 'Refreshing drink of crushed lulo, lime and ice.', 'image' => 'img/discover/lulada.webp', 'alt' => 'A glass of lulada with crushed lulo', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'Champús', 'text' => 'A traditional corn, pineapple and lulo drink spiced with cinnamon and clove.', 'image' => 'img/discover/champus.webp', 'alt' => 'A glass of champús', 'author' => '', 'license' => '', 'source' => '' ),
+				array( 'title' => 'Chontaduro', 'text' => 'Peach-palm fruit from the Pacific, eaten with salt and honey.', 'image' => 'img/discover/chontaduro.webp', 'alt' => 'Red and orange chontaduro fruit', 'author' => '', 'license' => '', 'source' => '' ),
+			),
+		),
 	);
 }
 
 /**
  * Primary navigation. Hard-coded on purpose: the layout depends on the exact
- * markup (dropdown panel, north-arrow button) and this is a one-page site.
+ * markup (mega-menu panels).
  *
- * @return array<int, array{label: string, anchor: string, children?: array}>
+ * Targets use andescon_url() syntax: "page#anchor". Heavy content lives on
+ * inner pages (see andescon_pages()) so the front page stays light.
+ *
+ * An item with `mega` opens a full-width panel: a dark column of `links`
+ * plus a `cta` on the left, and `cards` on the right. A card shows either an
+ * `image` (path under assets/) or a Font Awesome `icon`.
+ *
+ * @return array<int, array{label: string, url: string, mega?: array}>
  */
 function andescon_navigation(): array {
 	return array(
+		array( 'label' => 'Home', 'url' => '/' ),
 		array(
-			'label'    => 'Authors',
-			'children' => array(
-				array( 'title' => 'Call for Papers', 'note' => 'Scope and author information', 'anchor' => 'authors' ),
-				array( 'title' => 'Important dates', 'note' => 'Plan your submission', 'anchor' => 'dates' ),
-				array( 'title' => 'Submit a paper', 'note' => 'Prepare your contribution', 'anchor' => 'submission' ),
+			'label' => 'Authors',
+			'url'   => 'authors',
+			'mega'  => array(
+				'heading' => 'Call for papers',
+				'links'   => array(
+					array( 'title' => 'Call for Papers', 'url' => 'authors#authors' ),
+					array( 'title' => 'Research tracks', 'url' => 'authors#tracks' ),
+					array( 'title' => 'Important dates', 'url' => 'authors#dates' ),
+					array( 'title' => 'Submission guidelines', 'url' => 'authors#submission' ),
+					array( 'title' => 'Paper templates', 'url' => 'authors#templates' ),
+				),
+				'cta'     => array( 'label' => 'Submit a paper', 'url' => 'authors#submission' ),
+				'cards'   => array(
+					array( 'title' => 'Research tracks', 'text' => 'Nine fields, from intelligent systems to humanitarian technology.', 'url' => 'authors#tracks', 'icon' => 'fa-solid fa-layer-group' ),
+					array( 'title' => 'Important dates', 'text' => 'Full papers are due February 16, 2027.', 'url' => 'authors#dates', 'icon' => 'fa-regular fa-calendar-check' ),
+					array( 'title' => 'Submit a paper', 'text' => 'Prepare your contribution.', 'url' => 'authors#submission', 'icon' => 'fa-solid fa-file-arrow-up' ),
+				),
 			),
 		),
-		array( 'label' => 'Program', 'anchor' => 'program' ),
-		array( 'label' => 'Committee', 'anchor' => 'committee' ),
-		array( 'label' => 'Sponsors', 'anchor' => 'partners' ),
-		array( 'label' => 'Venue & travel', 'anchor' => 'travel' ),
-		array( 'label' => 'Contact', 'anchor' => 'contact' ),
-		array( 'label' => 'Registration', 'anchor' => 'registration' ),
+		array( 'label' => 'Program', 'url' => 'program' ),
+		array(
+			'label' => 'Attend',
+			'url'   => 'attend',
+			'mega'  => array(
+				'heading' => 'Join us in Cali',
+				'links'   => array(
+					array( 'title' => 'Registration', 'url' => 'attend#registration' ),
+					array( 'title' => 'Venue & travel', 'url' => 'attend#travel' ),
+					array( 'title' => 'Discover Cali', 'url' => 'attend#discover' ),
+				),
+				'cta'     => array( 'label' => 'Registration', 'url' => 'attend#registration' ),
+				'cards'   => array(
+					array( 'title' => 'This is Cali', 'text' => 'Discover the architecture, culture and energy of Cali.', 'url' => '#city', 'image' => 'img/cali.webp' ),
+					array( 'title' => 'Registration', 'text' => 'Fees for authors, attendees and students.', 'url' => 'attend#registration', 'icon' => 'fa-solid fa-id-badge' ),
+					array( 'title' => 'Venue & travel', 'text' => 'Getting here and where to stay.', 'url' => 'attend#travel', 'icon' => 'fa-solid fa-plane-arrival' ),
+				),
+			),
+		),
+		array( 'label' => 'Committee', 'url' => 'committee' ),
+	);
+}
+
+/**
+ * Inner pages, keyed by slug. page.php renders the matching template parts
+ * under a page header; the pages themselves are created by
+ * andescon_ensure_pages().
+ *
+ * @return array<string, array{title: string, intro: string, parts: string[]}>
+ */
+function andescon_pages(): array {
+	return array(
+		'authors'   => array(
+			'title' => 'Authors',
+			'intro' => 'Research tracks, submission guidelines and important dates for ANDESCON 2027 authors.',
+			'parts' => array( 'authors', 'tracks' ),
+		),
+		'program'   => array(
+			'title' => 'Program',
+			'intro' => 'Three days of keynotes, technical sessions and workshops in Cali, June 9–11, 2027.',
+			'parts' => array( 'program' ),
+		),
+		'attend'    => array(
+			'title' => 'Attend',
+			'intro' => 'Registration, venue and practical information for your trip to Cali.',
+			'parts' => array( 'registration', 'travel', 'discover' ),
+		),
+		'committee' => array(
+			'title' => 'Organizing committee',
+			'intro' => 'The people behind ANDESCON 2027.',
+			'parts' => array( 'committee' ),
+		),
 	);
 }
 
@@ -239,21 +355,6 @@ function andescon_dialogs(): array {
 			'title' => 'Registration information',
 			'body'  => '<p>Registration is not open in this design preview. No payments or personal information are collected.</p><p>Official fees, categories, inclusions and the registration link will be added once confirmed.</p>',
 		),
-		'partner'      => array(
-			'label' => 'CONFERENCE INFORMATION',
-			'title' => 'Become a partner',
-			'body'  => '<p>Partnership packages and the sponsorship contact are pending confirmation.</p><p>This space will connect prospective academic and industry partners with the organizing team.</p>',
-		),
-		'contact'      => array(
-			'label' => 'CONFERENCE INFORMATION',
-			'title' => 'Contact the organizing team',
-			'body'  => '<p>The official conference email and enquiry channels will appear here once confirmed.</p><p>For the final website, this action can open the conference mailbox or an enquiry form.</p>',
-		),
-		'credits'      => array(
-			'label' => 'CONFERENCE INFORMATION',
-			'title' => 'Image credits',
-			'body'  => '<p>Conference identity and Cali illustration: supplied and developed for this design project.</p><p><a href="https://commons.wikimedia.org/wiki/File:La_Ermita,_Cali,_Colombia.jpg" target="_blank" rel="noopener">La Ermita, Cali, Colombia</a> — Juanes016, CC0.</p><p><a href="https://commons.wikimedia.org/wiki/File:Ermita_cali.jpg" target="_blank" rel="noopener">Ermita cali</a> — C arango, public domain.</p>',
-		),
 	);
 }
 
@@ -272,7 +373,7 @@ function andescon_author_steps(): array {
 		),
 		array(
 			'title'  => 'Prepare your manuscript',
-			'text'   => 'Official templates, manuscript length, language requirements and review policies will be added here once confirmed.',
+			'text'   => 'Use the official ANDESCON 2027 paper templates (Word, LaTeX or Overleaf). Manuscript length, language requirements and review policies will be added here once confirmed.',
 			'open'   => false,
 			'dialog' => '',
 		),
@@ -292,6 +393,23 @@ function andescon_author_steps(): array {
 }
 
 /**
+ * Paper templates for authors (Authors page, #templates).
+ *
+ * To publish a template, drop the file into assets/templates/ with the exact
+ * name given in `file`: the card switches from "Coming soon" to a download
+ * link on its own. For Overleaf, paste the template link into `url`.
+ *
+ * @return array<int, array{title: string, format: string, icon: string, file?: string, url?: string}>
+ */
+function andescon_paper_templates(): array {
+	return array(
+		array( 'title' => 'Word template', 'format' => '.docx', 'icon' => 'fa-solid fa-file-word', 'file' => 'templates/andescon-2027-template.docx' ),
+		array( 'title' => 'LaTeX template', 'format' => '.zip', 'icon' => 'fa-solid fa-file-code', 'file' => 'templates/andescon-2027-latex.zip' ),
+		array( 'title' => 'Overleaf template', 'format' => 'Online', 'icon' => 'fa-solid fa-leaf', 'url' => '' ),
+	);
+}
+
+/**
  * Travel accordion.
  *
  * @return array<int, array{title: string, text: string, open: bool}>
@@ -300,7 +418,7 @@ function andescon_travel_topics(): array {
 	return array(
 		array(
 			'title' => 'Conference venue',
-			'text'  => 'The host venue, address, accessibility information and on-site facilities will be confirmed here.',
+			'text'  => 'ANDESCON 2027 will be hosted at Universidad Icesi, in the south of Cali. Accessibility information and on-site facilities will be confirmed here.',
 			'open'  => true,
 		),
 		array(
