@@ -27,7 +27,10 @@ $andescon_venue = andescon_venue();
 	</div>
 
 	<div class="travel-copy">
-		<h2><?php esc_html_e( 'Venue & travel', 'andescon-theme' ); ?></h2>
+		<div class="travel-heading">
+			<h2><?php esc_html_e( 'Venue & travel', 'andescon-theme' ); ?></h2>
+			<img class="map-walker" src="<?php echo esc_url( andescon_asset( 'img/map-walker.webp' ) ); ?>" alt="" width="460" height="520" loading="lazy">
+		</div>
 		<p><?php esc_html_e( 'Practical information for your trip to Cali.', 'andescon-theme' ); ?></p>
 
 		<?php foreach ( andescon_travel_topics() as $andescon_topic ) : ?>

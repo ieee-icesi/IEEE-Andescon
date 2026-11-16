@@ -1,9 +1,8 @@
 <?php
 /**
- * Discover Cali: places and typical food, as photo-card carousels.
- *
- * Photos come from Wikimedia Commons under free licenses; each card carries
- * its attribution as the licenses require.
+ * Discover Cali: an illustrated intro, then places and typical food as
+ * photo-card carousels. Wikimedia Commons photos carry their attribution
+ * as the licenses require.
  *
  * @package Andescon_Theme
  */
@@ -14,11 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <section id="discover" class="discover">
 	<div class="wrap">
-		<div class="section-head">
-			<div>
+		<div class="discover-intro">
+			<figure class="discover-poster">
+				<img src="<?php echo esc_url( andescon_asset( 'img/cali-poster.webp' ) ); ?>" alt="<?php esc_attr_e( 'Illustration: a market bag holding Cali — the Cristo Rey, the Gato del Río, a colonial chapel, lulo fruit, maracas and a glass of lulada.', 'andescon-theme' ); ?>" width="800" height="1000" loading="lazy">
+			</figure>
+			<div class="discover-lead">
+				<span class="eyebrow"><?php esc_html_e( 'Culture · Flavor · Rhythm', 'andescon-theme' ); ?></span>
 				<h2><?php esc_html_e( 'Discover Cali', 'andescon-theme' ); ?></h2>
+				<p class="discover-tagline"><?php esc_html_e( '“Llévate un poquito de Cali” — take a little bit of Cali home with you.', 'andescon-theme' ); ?></p>
+				<p><?php esc_html_e( 'Stay a few extra days. Salsa, green hills, rivers and some of the best street food in Colombia are waiting for you.', 'andescon-theme' ); ?></p>
+				<ul class="discover-jump">
+					<?php foreach ( andescon_discover() as $andescon_group_key => $andescon_group ) : ?>
+						<li><a href="<?php echo esc_url( '#discover-' . $andescon_group_key ); ?>"><?php echo esc_html( $andescon_group['title'] ); ?> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></a></li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
-			<p><?php esc_html_e( 'Stay a few extra days. Salsa, green hills, rivers and some of the best street food in Colombia are waiting for you.', 'andescon-theme' ); ?></p>
 		</div>
 
 		<?php foreach ( andescon_discover() as $andescon_group_key => $andescon_group ) : ?>
