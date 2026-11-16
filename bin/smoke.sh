@@ -57,16 +57,24 @@ body=$(cat /tmp/andescon-home.html)
 # ------------------------------------------------------- 2. rendered content
 count() { printf '%s' "$body" | grep -o "$1" | wc -l | tr -d ' '; }
 
-check_eq "9 research track cards"          "9"  "$(count 'class="track" data-dialog')"
-check_eq "14 dialogs (9 tracks + 5)"       "14" "$(count '<dialog id="dialog-')"
-check_eq "3 program panels"                "3"  "$(count 'role="tabpanel"')"
-check_eq "3 program tabs"                  "3"  "$(count 'role="tab"')"
-check_eq "12 sessions rendered"            "12" "$(count 'class="session"')"
-check_eq "4 milestones"                    "4"  "$(count '<h4>')"
-check_eq "3 registration tiers"            "3"  "$(count 'data-dialog="registration"')"
+check_eq "11 dialogs (9 tracks + 2)"       "11" "$(count '<dialog id="dialog-')"
+check_eq "4 important dates on home"       "4"  "$(count '<h4>')"
+check_eq "5 top-level nav items"           "5"  "$(printf '%s' "$body" | sed -n '/<nav id="navigation"/,/<\/nav>/p' | grep -cE '<div class="dropdown|<a href="[^"]*"( aria-current="page")?>[A-Za-z ]+</a>')"
 
-if grep -q 'Engineering' <<<"$body"; then ok "hero headline present"; else ko "hero headline present"; fi
-if grep -q 'Nine tracks' <<<"$body"; then ok "tracks section present"; else ko "tracks section present"; fi
+if grep -q 'class="hero-banner"' <<<"$body"; then ok "hero banner present"; else ko "hero banner present"; fi
+if grep -q 'id="contact"' <<<"$body"; then ok "contact footer present"; else ko "contact footer present"; fi
+
+# Inner pages: heavy sections live here, not on the front page.
+page() { curl -s "${BASE}/$1/"; }
+pcount() { printf '%s' "$1" | grep -o "$2" | wc -l | tr -d ' '; }
+authors=$(page authors); program=$(page program); attend=$(page attend); committee=$(page committee)
+check_eq "authors: 9 research track cards" "9" "$(pcount "$authors" 'class="track" data-dialog')"
+check_eq "authors: submission guide"       "1" "$(pcount "$authors" 'id="submission"')"
+check_eq "program: 3 program days"         "3" "$(pcount "$program" 'class="program-day"')"
+check_eq "attend: 3 registration tiers"    "3" "$(pcount "$attend" 'data-dialog="registration"')"
+check_eq "attend: travel section"          "1" "$(pcount "$attend" 'id="travel"')"
+check_eq "attend: 11 discover cards"       "11" "$(pcount "$attend" 'class="discover-card"')"
+check_eq "committee: section"              "1" "$(pcount "$committee" 'id="committee"')"
 
 # --------------------------------------------------------- 3. no PHP errors
 errors=$(printf '%s' "$body" | grep -cE 'Fatal error|Parse error|Warning:|Notice:|Deprecated:|Undefined')
@@ -76,7 +84,7 @@ check_eq "no PHP errors leaked into HTML" "0" "$errors"
 for asset in \
 	assets/css/main.css \
 	assets/js/main.js \
-	assets/img/identity.webp \
+	assets/img/logo.webp \
 	assets/img/cali-illustration.webp \
 	assets/img/cali.webp \
 	assets/img/ermita.webp; do
